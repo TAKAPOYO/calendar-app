@@ -107,6 +107,8 @@ function createDayCell(day, ds, otherMonth) {
     dotsToShow.forEach(cat => {
       const dot = document.createElement('span');
       dot.classList.add('category-dot', `cat-${cat}`);
+      const dotColor = (CATEGORIES[cat] || CATEGORIES.other).color;
+      dot.style.backgroundColor = dotColor;
       dotsEl.appendChild(dot);
     });
     cell.appendChild(dotsEl);
@@ -140,6 +142,8 @@ function renderTodos(todos, ds) {
     if (todo.done) li.classList.add('done');
     const category = todo.category || 'other';
     li.classList.add(`cat-${category}`);
+    const catColor = (CATEGORIES[category] || CATEGORIES.other).color;
+    li.style.borderLeftColor = catColor;
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
