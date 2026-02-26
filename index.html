@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>カレンダーアプリ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="calendar-section">
+      <div class="calendar-header">
+        <button id="prev-btn">&lt;</button>
+        <h2 id="month-year"></h2>
+        <button id="next-btn">&gt;</button>
+      </div>
+      <div class="calendar-grid">
+        <div class="day-name">日</div>
+        <div class="day-name">月</div>
+        <div class="day-name">火</div>
+        <div class="day-name">水</div>
+        <div class="day-name">木</div>
+        <div class="day-name">金</div>
+        <div class="day-name">土</div>
+      </div>
+      <div id="calendar-days" class="calendar-grid"></div>
+    </div>
+
+    <div class="side-section">
+      <div class="selected-date-display">
+        <h3 id="selected-date-title">日付を選択してください</h3>
+      </div>
+
+      <div class="notes-section">
+        <h4>メモ</h4>
+        <textarea id="note-input" placeholder="この日のメモを入力..."></textarea>
+        <button id="save-note-btn">メモを保存</button>
+      </div>
+
+      <div class="todos-section">
+        <h4>TODO</h4>
+        <div class="todo-input-row">
+          <input type="text" id="todo-input" placeholder="TODOを追加...">
+          <button id="add-todo-btn">追加</button>
+        </div>
+        <ul id="todo-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
