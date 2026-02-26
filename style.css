@@ -1,0 +1,285 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f4f8;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px;
+}
+
+.container {
+  display: flex;
+  gap: 24px;
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Calendar */
+.calendar-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 20px;
+  flex: 0 0 340px;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.calendar-header h2 {
+  font-size: 1.1rem;
+  color: #2d3748;
+}
+
+.calendar-header button {
+  background: none;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 4px 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #4a5568;
+  transition: background 0.15s;
+}
+
+.calendar-header button:hover {
+  background: #edf2f7;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.day-name {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #718096;
+  padding: 4px 0;
+}
+
+.day-cell {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: #2d3748;
+  position: relative;
+  transition: background 0.15s;
+}
+
+.day-cell:hover {
+  background: #edf2f7;
+}
+
+.day-cell.today {
+  background: #ebf8ff;
+  color: #2b6cb0;
+  font-weight: 700;
+}
+
+.day-cell.selected {
+  background: #4299e1;
+  color: #fff;
+  font-weight: 700;
+}
+
+.day-cell.other-month {
+  color: #cbd5e0;
+}
+
+.day-cell.has-data::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #f6ad55;
+  border-radius: 50%;
+}
+
+.day-cell.selected.has-data::after {
+  background: #fff;
+}
+
+/* Side section */
+.side-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.selected-date-display {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 16px 20px;
+}
+
+.selected-date-display h3 {
+  font-size: 1rem;
+  color: #4a5568;
+}
+
+.notes-section,
+.todos-section {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 16px 20px;
+}
+
+.notes-section h4,
+.todos-section h4 {
+  font-size: 0.9rem;
+  color: #718096;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+textarea#note-input {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  resize: vertical;
+  color: #2d3748;
+  outline: none;
+  transition: border 0.15s;
+}
+
+textarea#note-input:focus {
+  border-color: #4299e1;
+}
+
+#save-note-btn {
+  margin-top: 8px;
+  background: #4299e1;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#save-note-btn:hover {
+  background: #3182ce;
+}
+
+.todo-input-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+#todo-input {
+  flex: 1;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-size: 0.9rem;
+  color: #2d3748;
+  outline: none;
+  transition: border 0.15s;
+}
+
+#todo-input:focus {
+  border-color: #4299e1;
+}
+
+#add-todo-btn {
+  background: #48bb78;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#add-todo-btn:hover {
+  background: #38a169;
+}
+
+#todo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#todo-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: #f7fafc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #2d3748;
+}
+
+#todo-list li.done .todo-text {
+  text-decoration: line-through;
+  color: #a0aec0;
+}
+
+#todo-list li input[type="checkbox"] {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  accent-color: #48bb78;
+}
+
+.todo-text {
+  flex: 1;
+}
+
+.delete-todo {
+  background: none;
+  border: none;
+  color: #fc8181;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 4px;
+  transition: color 0.15s;
+}
+
+.delete-todo:hover {
+  color: #e53e3e;
+}
+
+@media (max-width: 640px) {
+  .container {
+    flex-direction: column;
+  }
+  .calendar-section {
+    flex: none;
+  }
+}
