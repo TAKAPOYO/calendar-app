@@ -3,6 +3,14 @@ let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth(); // 0-indexed
 let selectedDate = null;
 
+// Category definitions
+const CATEGORIES = {
+  work:      { label: '仕事',         color: '#4299e1' },
+  private:   { label: 'プライベート', color: '#48bb78' },
+  important: { label: '重要',         color: '#e53e3e' },
+  other:     { label: 'その他',       color: '#a0aec0' }
+};
+
 // Storage key helpers
 function storageKey(date) {
   return `cal_${date}`;
@@ -82,8 +90,28 @@ function createDayCell(day, ds, otherMonth) {
   const cell = document.createElement('div');
   cell.classList.add('day-cell');
   if (otherMonth) cell.classList.add('other-month');
-  if (hasData(ds)) cell.classList.add('has-data');
-  cell.textContent = day;
+
+  const numSpan = document.createElement('span');
+  numSpan.textContent = day;
+  cell.appendChild(numSpan);
+
+  // Category dots
+  const data = getData(ds);
+  const hasNote = data.note.trim() !== '';
+  const todoCats = [...new Set(data.todos.map(t => t.category || 'other'))];
+
+  if (hasNote || todoCats.length > 0) {
+    const dotsEl = document.createElement('div');
+    dotsEl.classList.add('category-dots');
+    const dotsToShow = todoCats.length > 0 ? todoCats : ['other'];
+    dotsToShow.forEach(cat => {
+      const dot = document.createElement('span');
+      dot.classList.add('category-dot', `cat-${cat}`);
+      dotsEl.appendChild(dot);
+    });
+    cell.appendChild(dotsEl);
+  }
+
   cell.addEventListener('click', () => selectDate(ds));
   return cell;
 }
@@ -110,6 +138,8 @@ function renderTodos(todos, ds) {
   todos.forEach((todo, index) => {
     const li = document.createElement('li');
     if (todo.done) li.classList.add('done');
+    const category = todo.category || 'other';
+    li.classList.add(`cat-${category}`);
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
@@ -120,6 +150,11 @@ function renderTodos(todos, ds) {
     span.classList.add('todo-text');
     span.textContent = todo.text;
 
+    const catBadge = document.createElement('span');
+    catBadge.classList.add('cat-badge');
+    catBadge.textContent = CATEGORIES[category].label;
+    catBadge.style.color = CATEGORIES[category].color;
+
     const delBtn = document.createElement('button');
     delBtn.classList.add('delete-todo');
     delBtn.textContent = '×';
@@ -127,6 +162,7 @@ function renderTodos(todos, ds) {
 
     li.appendChild(checkbox);
     li.appendChild(span);
+    li.appendChild(catBadge);
     li.appendChild(delBtn);
     list.appendChild(li);
   });
@@ -200,14 +236,23 @@ function addTodo() {
   const input = document.getElementById('todo-input');
   const text = input.value.trim();
   if (!text) return;
+  const category = document.getElementById('category-select').value;
   const data = getData(selectedDate);
-  data.todos.push({ text, done: false });
+  data.todos.push({ text, done: false, category });
   saveData(selectedDate, data);
   input.value = '';
   renderTodos(data.todos, selectedDate);
   renderCalendar();
   if (selectedDate) loadSidePanel(selectedDate);
 }
+
+// Update category select appearance on change
+const catSelectEl = document.getElementById('category-select');
+function updateCatSelectStyle() {
+  catSelectEl.dataset.cat = catSelectEl.value;
+}
+catSelectEl.addEventListener('change', updateCatSelectStyle);
+updateCatSelectStyle();
 
 // Initial render
 renderCalendar();

@@ -39,7 +39,19 @@
 
       <div class="todos-section">
         <h4>TODO</h4>
+        <div class="category-legend">
+          <span class="legend-item"><span class="legend-dot cat-work"></span>仕事</span>
+          <span class="legend-item"><span class="legend-dot cat-private"></span>プライベート</span>
+          <span class="legend-item"><span class="legend-dot cat-important"></span>重要</span>
+          <span class="legend-item"><span class="legend-dot cat-other"></span>その他</span>
+        </div>
         <div class="todo-input-row">
+          <select id="category-select">
+            <option value="work">仕事</option>
+            <option value="private">プライベート</option>
+            <option value="important">重要</option>
+            <option value="other" selected>その他</option>
+          </select>
           <input type="text" id="todo-input" placeholder="TODOを追加...">
           <button id="add-todo-btn">追加</button>
         </div>
