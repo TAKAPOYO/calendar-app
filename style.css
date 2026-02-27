@@ -345,11 +345,101 @@ textarea#note-input:focus {
   color: #e53e3e;
 }
 
+/* Mobile handle indicator (hidden on desktop) */
+.mobile-handle {
+  display: none;
+}
+
+/* Mobile backdrop overlay */
+.mobile-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
+}
+
+.mobile-backdrop.is-visible {
+  display: block;
+}
+
+/* Mobile close button (hidden on desktop) */
+.mobile-close-btn {
+  display: none;
+}
+
 @media (max-width: 640px) {
+  body {
+    padding: 12px 12px 0;
+  }
+
   .container {
     flex-direction: column;
+    gap: 0;
   }
+
   .calendar-section {
     flex: none;
+  }
+
+  /* Bottom sheet panel */
+  .side-section {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f0f4f8;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+    padding: 0 16px 40px;
+    max-height: 80vh;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+    z-index: 100;
+  }
+
+  .side-section.is-open {
+    transform: translateY(0);
+  }
+
+  .mobile-handle {
+    display: block;
+    width: 36px;
+    height: 4px;
+    background: #cbd5e0;
+    border-radius: 2px;
+    margin: 12px auto 8px;
+    flex-shrink: 0;
+  }
+
+  .mobile-backdrop.is-visible {
+    display: block;
+  }
+
+  .selected-date-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mobile-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e2e8f0;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+    color: #4a5568;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+  }
+
+  .mobile-close-btn:hover {
+    background: #cbd5e0;
   }
 }

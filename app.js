@@ -118,12 +118,24 @@ function createDayCell(day, ds, otherMonth) {
   return cell;
 }
 
+// Mobile bottom sheet open/close
+function openMobilePanel() {
+  document.querySelector('.side-section').classList.add('is-open');
+  document.getElementById('mobile-backdrop').classList.add('is-visible');
+}
+
+function closeMobilePanel() {
+  document.querySelector('.side-section').classList.remove('is-open');
+  document.getElementById('mobile-backdrop').classList.remove('is-visible');
+}
+
 // Select a date
 function selectDate(ds) {
   selectedDate = ds;
   document.getElementById('selected-date-title').textContent = formatDisplayDate(ds);
   renderCalendar();
   loadSidePanel(ds);
+  if (window.innerWidth <= 640) openMobilePanel();
 }
 
 // Load note and todos for selected date
@@ -257,6 +269,10 @@ function updateCatSelectStyle() {
 }
 catSelectEl.addEventListener('change', updateCatSelectStyle);
 updateCatSelectStyle();
+
+// Mobile panel close handlers
+document.getElementById('mobile-backdrop').addEventListener('click', closeMobilePanel);
+document.getElementById('mobile-close-btn').addEventListener('click', closeMobilePanel);
 
 // Initial render
 renderCalendar();
